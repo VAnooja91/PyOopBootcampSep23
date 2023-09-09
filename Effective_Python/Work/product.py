@@ -9,6 +9,8 @@ class Product:
     def cost(self): 
         return self.quant *self.price
 
+    def sell(self, nunits):
+        self.quant -= nunits
 
 
     
