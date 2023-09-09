@@ -5,7 +5,7 @@
 import csv
 import fileparse as fp
 from product import Product
-from tableformatter import TableFormatter
+from tableformat import TableFormatter
 
 def read_prices(filename:str) -> dict:
     '''
