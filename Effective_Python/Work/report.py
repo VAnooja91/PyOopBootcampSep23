@@ -5,6 +5,7 @@
 import csv
 import fileparse as fp
 from product import Product
+from tableformatter import TableFormatter
 
 def read_prices(filename:str) -> dict:
     '''
@@ -38,22 +39,25 @@ def make_report(inventory, prices):
     return report
 
 
-def print_report(report):
+def print_report(report, formatter):
     headers = ('Name', 'Quantity', 'Price', 'Change')
-    print('%10s %10s %10s %10s' % headers)
+    #print('%10s %10s %10s %10s' % headers)
+    #dashes = tuple(['-' * 10] * 4)
+    #print('%10s %10s %10s %10s' % dashes)
+    formatter.headings(headers)
 
-    dashes = tuple(['-' * 10] * 4)
-    print('%10s %10s %10s %10s' % dashes)
-
-    for r in report:
-        print('%10s %10d %10.2f %10.2f' % r)
+    for name,quant,price,change in report:
+        #print('%10s %10d %10.2f %10.2f' % r)
+        rowdata = [name, str(quant), f'{price:2f}', f'{change:2f}']
+        formatter.row(rowdata)
 
 
 def inventory_report(inventory_file, prices_file):
     inventory = read_inventory(inventory_file)
     prices = read_prices(prices_file)
     report = make_report(inventory, prices)
-    print_report(report)
+    formatter = TableFormatter()
+    print_report(report, formatter)
 
 
 def main():
