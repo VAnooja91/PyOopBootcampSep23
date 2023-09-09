@@ -5,7 +5,10 @@
 import csv
 import fileparse as fp
 from product import Product
-from tableformat import TableFormatter
+from tableformat import (TableFormatter,
+                         TextTableFormatter,
+                         CSVTableFormatter
+                        )
 
 def read_prices(filename:str) -> dict:
     '''
@@ -19,12 +22,20 @@ def read_prices(filename:str) -> dict:
 def read_inventory(filename):
     '''
         Reads a csv file
-        Returns a list of dict [ for each row ]
+        Returns a list of dictionaries [ for each row ]
     '''
+    #return fp.parse_csv(filename, 
     inv = fp.parse_csv(filename, 
                  select=['name', 'quant', 'price'],
                  types=[str, int, float])
-    inventory = [Product(prod_dict['name'], prod_dict['quant'], prod_dict['price']) for prod_dict in inv]
+
+    # Add code here
+    # convert inv .. which is a list of dictionaries
+    # to a list of Product instances
+    # Return that list of Product instances
+    inventory = [ Product(pr_dict['name'], pr_dict['quant'], pr_dict['price'])
+                  for pr_dict in inv
+                ]
     return inventory
 
 def make_report(inventory, prices):
@@ -48,7 +59,7 @@ def print_report(report, formatter):
 
     for name,quant,price,change in report:
         #print('%10s %10d %10.2f %10.2f' % r)
-        rowdata = [name, str(quant), f'{price:2f}', f'{change:2f}']
+        rowdata = [name, str(quant), f'{price:.2f}', f'{change:.2f}']
         formatter.row(rowdata)
 
 
@@ -56,7 +67,10 @@ def inventory_report(inventory_file, prices_file):
     inventory = read_inventory(inventory_file)
     prices = read_prices(prices_file)
     report = make_report(inventory, prices)
-    formatter = TableFormatter()
+
+    #formatter = TableFormatter()
+    #formatter = TextTableFormatter()
+    formatter = CSVTableFormatter()
     print_report(report, formatter)
 
 
