@@ -1,5 +1,4 @@
 
-
 class Product:
 
     def __init__(self, name, quant, price) -> None:
