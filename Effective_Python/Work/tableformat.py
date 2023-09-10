@@ -6,8 +6,11 @@ def create_formatter(name):
     elif name == 'csv':
         formatter = CSVTableFormatter()
     else:
-        raise RuntimeError(f"unknown formatter {name}")
+        raise FormateError(f"unknown formatter {name}")
     return formatter
+
+class FormateError(Exception):
+    pass
 
 #class TableFormatter:
 class TableFormatter(ABC):

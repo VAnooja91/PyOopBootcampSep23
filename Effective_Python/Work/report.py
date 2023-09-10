@@ -8,7 +8,8 @@ from product import Product
 from tableformat import (TableFormatter,
                          TextTableFormatter,
                          CSVTableFormatter,
-                         create_formatter
+                         create_formatter, 
+                         FormateError
                         )
 
 def read_prices(filename:str) -> dict:
@@ -68,8 +69,12 @@ def inventory_report(inventory_file, prices_file, frmt = 'txt'):
     inventory = read_inventory(inventory_file)
     prices = read_prices(prices_file)
     report = make_report(inventory, prices)
-    
-    formatter = create_formatter(frmt)
+    try:
+        formatter = create_formatter(frmt)
+    except FormateError as e:
+        print(e)
+        print(f"*********Falling back to Text Format**********")
+        formatter = create_formatter('txt')
     print_report(report, formatter)
 
 
