@@ -7,7 +7,8 @@ import fileparse as fp
 from product import Product
 from tableformat import (TableFormatter,
                          TextTableFormatter,
-                         CSVTableFormatter
+                         CSVTableFormatter,
+                         create_formatter
                         )
 
 def read_prices(filename:str) -> dict:
@@ -67,13 +68,8 @@ def inventory_report(inventory_file, prices_file, frmt = 'txt'):
     inventory = read_inventory(inventory_file)
     prices = read_prices(prices_file)
     report = make_report(inventory, prices)
-    if frmt == 'txt':
-        formatter = TextTableFormatter()
-    elif frmt == 'csv':
-        formatter = CSVTableFormatter()
-    else:
-        raise RuntimeError(f"unknown formatter {frmt}")
     
+    formatter = create_formatter(frmt)
     print_report(report, formatter)
 
 
@@ -84,7 +80,7 @@ def main():
 
     inv_file = sys.argv[1]
     prices_file = sys.argv[2]
-    inventory_report(inv_file, prices_file, frmt)
+    inventory_report(inv_file, prices_file)
 
 # Main starts from here
 if __name__ == "__main__":

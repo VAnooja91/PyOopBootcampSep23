@@ -1,5 +1,14 @@
 from abc import ABC, abstractmethod
 
+def create_formatter(name):
+    if name == 'txt':
+        formatter = TextTableFormatter()
+    elif name == 'csv':
+        formatter = CSVTableFormatter()
+    else:
+        raise RuntimeError(f"unknown formatter {name}")
+    return formatter
+
 #class TableFormatter:
 class TableFormatter(ABC):
     @abstractmethod
