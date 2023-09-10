@@ -63,14 +63,17 @@ def print_report(report, formatter):
         formatter.row(rowdata)
 
 
-def inventory_report(inventory_file, prices_file):
+def inventory_report(inventory_file, prices_file, frmt = 'txt'):
     inventory = read_inventory(inventory_file)
     prices = read_prices(prices_file)
     report = make_report(inventory, prices)
-
-    #formatter = TableFormatter()
-    #formatter = TextTableFormatter()
-    formatter = CSVTableFormatter()
+    if frmt == 'txt':
+        formatter = TextTableFormatter()
+    elif frmt == 'csv':
+        formatter = CSVTableFormatter()
+    else:
+        raise RuntimeError(f"unknown formatter {frmt}")
+    
     print_report(report, formatter)
 
 
@@ -81,7 +84,7 @@ def main():
 
     inv_file = sys.argv[1]
     prices_file = sys.argv[2]
-    inventory_report(inv_file, prices_file)
+    inventory_report(inv_file, prices_file, frmt)
 
 # Main starts from here
 if __name__ == "__main__":
