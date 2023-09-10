@@ -75,12 +75,13 @@ def inventory_report(inventory_file, prices_file, frmt = 'txt'):
 
 def main():
     import sys
-    if len(sys.argv) != 3:
-        raise SystemExit(f'Usage: {sys.argv[0]} invfile pricesfile')
+    if len(sys.argv) != 4:
+        raise SystemExit(f'Usage: {sys.argv[0]} invfile pricesfile frmt')
 
     inv_file = sys.argv[1]
     prices_file = sys.argv[2]
-    inventory_report(inv_file, prices_file)
+    frmt = sys.argv[3]
+    inventory_report(inv_file, prices_file,frmt)
 
 # Main starts from here
 if __name__ == "__main__":
