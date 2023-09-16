@@ -11,6 +11,7 @@ from tableformat import (TableFormatter,
                          create_formatter, 
                          FormateError
                         )
+from inventory import Inventory
 
 def read_prices(filename:str) -> dict:
     '''
@@ -35,10 +36,10 @@ def read_inventory(filename):
     # convert inv .. which is a list of dictionaries
     # to a list of Product instances
     # Return that list of Product instances
-    inventory = [ Product(pr_dict['name'], pr_dict['quant'], pr_dict['price'])
+    inv_list = [ Product(pr_dict['name'], pr_dict['quant'], pr_dict['price'])
                   for pr_dict in inv
                 ]
-    return inventory
+    return Inventory(inv_list)
 
 def make_report(inventory, prices):
     report = list()
