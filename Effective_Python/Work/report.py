@@ -28,18 +28,18 @@ def read_inventory(filename):
         Returns a list of dictionaries [ for each row ]
     '''
     #return fp.parse_csv(filename, 
-    inv = fp.parse_csv(filename, 
-                 select=['name', 'quant', 'price'],
-                 types=[str, int, float])
+    #inv = fp.parse_csv(filename, 
+    #             select=['name', 'quant', 'price'],
+    #             types=[str, int, float])
 
     # Add code here
     # convert inv .. which is a list of dictionaries
     # to a list of Product instances
     # Return that list of Product instances
-    inv_list = [ Product(pr_dict['name'], pr_dict['quant'], pr_dict['price'])
-                  for pr_dict in inv
-                ]
-    return Inventory(inv_list)
+    #inv_list = [ Product(pr_dict['name'], pr_dict['quant'], pr_dict['price'])
+    #              for pr_dict in inv
+    #           ]
+    return Inventory.from_csv(filename)
 
 def make_report(inventory, prices):
     report = list()
