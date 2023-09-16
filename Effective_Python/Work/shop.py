@@ -3,11 +3,8 @@ from report import read_inventory
 
 def recipt(filename):
     inv = read_inventory(filename)
-    total = 0
-    for pr in inv:
-        total += pr.quant * pr.price
     
-    return total
+    return inv.total_cost()
 
 amount = recipt("Data/inventory.csv")
 
